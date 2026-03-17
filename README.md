@@ -38,13 +38,32 @@ pip install -r requirements.txt
 
 ## Utilisation
 
-Ce dépôt ne contient pas encore de script d'exécution standard. Une structure typique à venir :
+### Suivi des équipes (vidéo annotée)
 
 ```bash
-python -m src.main \
-  --input \"data/raw/match.mp4\" \
-  --output \"data/outputs/annotated.mp4\"
+cd src
+python main.py --input data/videos/match.mp4 --output-video data/videos/res_final.mp4
 ```
+
+### Extraction des statistiques du match
+
+```bash
+cd src
+python main.py --input data/videos/match.mp4 --stats --stats-dir data/stats
+```
+
+Les fichiers générés dans `data/stats/` sont :
+
+| Fichier | Description |
+|---|---|
+| `match_stats.json` | Statistiques agrégées (possession, nb joueurs…) |
+| `match_stats_per_frame.csv` | Données frame par frame (position ballon, possession, effectif) |
+| `heatmap_Equipe_1.jpg` | Heatmap OpenCV des positions de l'équipe 1 |
+| `heatmap_Equipe_2.jpg` | Heatmap OpenCV des positions de l'équipe 2 |
+| `heatmap_Equipe_1_plot.jpg` | Heatmap Matplotlib de l'équipe 1 |
+| `heatmap_Equipe_2_plot.jpg` | Heatmap Matplotlib de l'équipe 2 |
+| `possession_chart.jpg` | Graphique camembert de la possession |
+| `ball_trajectory.jpg` | Trajectoire du ballon sur toute la vidéo |
 
 ## Structure de dossier (proposée)
 
@@ -68,10 +87,11 @@ football-video-detection/
 
 ## Roadmap (idées)
 
-- [ ] Choisir/entraîner un détecteur (ex. YOLO)
-- [ ] Tracking multi-objets (ex. ByteTrack / DeepSORT)
+- [x] Choisir/entraîner un détecteur (ex. YOLO)
+- [x] Tracking multi-objets (clustering KMeans pour les équipes)
+- [x] Exports : vidéo annotée + fichiers CSV/JSON + heatmaps + trajectoire ballon
+- [x] Extraction des statistiques du match (possession, effectif, heatmaps)
 - [ ] Homographie / repérage terrain pour projeter les positions
-- [ ] Exports : vidéo annotée + fichiers CSV/JSON
 - [ ] Tests + CI
 
 ## Contribuer
